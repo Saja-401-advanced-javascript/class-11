@@ -37,6 +37,11 @@ app.get('/users', basicAuth, (req, res) => { // get request
   res.status(200).json(users.list());
 });
 
+
+app.get('/oath', oath, (res, req) => {
+  res.status(200).send(res.token);
+})
+
 app.use(logger);
 app.use(errorHandler);
 app.use('*', notFoundHandler);
