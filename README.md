@@ -1,35 +1,25 @@
-# LAB - Class xx
+# LAB - Class 11
 
-## Project Name
+## Authentication
 
-### Author: Student/Group Name
-
+### Author: Saja Swalgah
 ### Links and Resources
 
-- [submission PR](http://xyz.com)
-- [ci/cd](http://xyz.com) (GitHub Actions)
-- [back-end server url](http://xyz.com) (when applicable)
-- [front-end application](http://xyz.com) (when applicable)
+- [submission PR](https://github.com/Saja-401-advanced-javascript/class-11/pull/2)
 
-### Setup
+
 
 #### `.env` requirements (where applicable)
 
-i.e.
 
-- `PORT` - Port Number
-- `MONGODB_URI` - URL to the running mongo instance/db
+
+- `PORT` -6000
+- MONGOOSE_URI=mongodb://localhost:27017/Auth
 
 #### How to initialize/run your application (where applicable)
 
-- e.g. `npm start`
-
-#### Tests
-
-- How do you run tests?
-- Any tests of note?
-- Describe any tests that you did not complete, skipped, etc
+-  `npm start`
 
 #### UML
 
-Link to an image of the UML for your application and response to events
+![](img/class11.jpeg)
