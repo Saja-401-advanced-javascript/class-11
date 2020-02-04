@@ -4,29 +4,21 @@
 
 const bcrypt = require('bcryptjs'); // hash and compare a pw against a hashed pw
 const jwt = require('jsonwebtoken'); //two factor layer:pw and SECRET
+const models = require('../model/model.js');
+const userSchema = require ('../model/ui-schema.js')
 
 // to add another layer of securety and to use as conjection with jwt
 
 let SECRET = process.env.SECRET || 'topSecret';
 // console.log('////////', SECRET);
 
-let db = {};
-let users = {};
-// we wanna attach users to db
 
 
 
-// save is a method related to users obj
-// async : we want bcrypt to do operations and when u done give info that i use to hash 
-users.save = async function (record) { // record is an object
-  // if we dont have the username in the db then save the pw after hashing it so it is unreadble
 
-  // record example : {
-  //     "Saja": {
-  //         "username": "Saja",
-  //         "password": "$2a$05$TOj.ccN5gtQ4orp/fJHL6OAEtcEwsESaWdRhKorsPaPziA3yazYY2"
-  //     }
-  // }
+users.save = async function (record) { 
+
+ 
   if (!db[record.username]) {
     record.password = await bcrypt.hash(record.password, 5);
 
