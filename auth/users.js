@@ -4,45 +4,40 @@
 
 const bcrypt = require('bcryptjs'); // hash and compare a pw against a hashed pw
 const jwt = require('jsonwebtoken'); //two factor layer:pw and SECRET
-const models = require('../model/model.js');
-const userSchema = require ('../model/ui-schema.js')
-
-// to add another layer of securety and to use as conjection with jwt
-
-let SECRET = process.env.SECRET || 'topSecret';
-// console.log('////////', SECRET);
+const mongoose = require('mongoose');
 
 
+let SECRET = "authentecation" ;
+
+const users = mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+});
+
+users.pre('save', async function () {
+  this.password = await bcrypt.hash(this.password, 5);
+})
+
+
+//statics => cannot use this in this function, it belongs to everyone, used to save memory 
+users.statics.authenticateBasic = async function (user, pass) { // compare my pw with a hashed one.. if it valid => great 
+  let userToFind = { username: user }
+  let found = await this.find(userToFind);
+  if (found) {
+    let valid = bcrypt.compare(pass, found[0].password);
+    return valid ? found[0].username : Promise.reject();
+  } else { Promise.reject(); }
+}
 
 
 
-users.save = async function (record) { 
-
- 
-  if (!db[record.username]) {
-    record.password = await bcrypt.hash(record.password, 5);
-
-    db[record.username] = record;
-    return record; // obj of username and pw
-  }
-
-  return Promise.reject();
-};
-
-
-users.authenticateBasic = async function (user, pass) { // compare my pw with a hashed one.. if it valid => great 
-  let valid = await bcrypt.compare(pass, db[user].password);
-  return valid ? db[user] : Promise.reject();
-};
-
-users.generateToken = function (user) {
-  let token = jwt.sign({ username: user.username }, SECRET);
+users.methods.generateToken = function (user) {
+  let token = jwt.sign({ id: this._id }, SECRET);
   return token;
 };
 // give a unique token used to authorization using 2-factors layer : username and SECRET 
 
-users.list = () => db; // list is a function that return db
 
-module.exports = users;
+module.exports = mongoose.model('users', users);
 
 

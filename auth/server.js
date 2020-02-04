@@ -28,7 +28,9 @@ app.post('/signup', (req, res) => {//post request
 
 
 // when sign in u need to run basic off to make sure i am who i am
-app.post('/signin', basicAuth, (req, res) => { // post request 
+app.post('/signin', basicAuth, (req, res) => { // post request
+  console.log('*******************', req.token);
+   
   res.status(200).send(req.token);// give a token using in future to give me accsses to my account
 });
 //basicAuth => middlewae
