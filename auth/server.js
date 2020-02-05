@@ -12,6 +12,8 @@ const errorHandler = require('../middleware/500.js');
 const app = express();
 
 app.use(express.json());
+app.use(express.static('/public'));
+
 
 
 
@@ -38,9 +40,9 @@ app.get('/users', basicAuth, (req, res) => { // get request
 });
 
 
-app.get('/oath', oath, (res, req) => {
-  res.status(200).send(res.token);
-})
+// app.get('/oath', oath, (res, req) => {
+//   res.status(200).send(res.token);
+// })
 
 app.use(logger);
 app.use(errorHandler);

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>Document</title>
+</head>
+<body>
+    <h1> Login to github</h1>
+    <a href="#" id="oauth"> Log IN</a>
+</body>
+<script>
+    let URL = 'https://github.com/login/oauth/authorize';
+//url => sign in github page (base url)
+    let options = {
+      client_id: '',      
+      redirect_uri: 'http://localhost:3000/oauth', // where we go when i'm done... (redirect_uri) is a query string property
+      scope: 'read:user', // what info i'm trying to get, if there is no scope it will give every thing about github account
+      state: 'myfirstapp'// whatever i want 
+    }
+
+    let QueryString = Object.keys(options).map((key) => {
+      return `${key}=` + encodeURIComponent(options[key]); //building query
+    }).join('&'); // array of keys
+    // encodeURIComponent => escape weired charecters
+    // console.log('long form qs:', QueryString);
+
+    let authURL = `${URL}?${QueryString}`;
+
+    console.log('the whole url:', authURL);
+    
+    let link = document.getElementById('oauth');
+    link.setAttribute('href', authURL);
+  </script>
+</html>
