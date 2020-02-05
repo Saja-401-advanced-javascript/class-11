@@ -4,12 +4,7 @@ const base64 = require('base-64');
 const users = require('../auth/users.js');
 
 
-function generateToken(user) {
-  let token = jwt.sign({ id: user._id  }, SECRET);
-  // let token = jwt.sign({ username: user.username}, SECRET);
-  //
-  return token;
-}
+
 
 module.exports = (req, res, next) => { // middleware to modify the request
 //req.headers.authorization => when insert your username and pw
@@ -28,5 +23,5 @@ module.exports = (req, res, next) => { // middleware to modify the request
       req.token = generateToken(validUser);
       // console.log('token:', req.token);
       next();
-    }).catch( err => next('invalid login'));
+    }).catch( err => next('error'));
 };
