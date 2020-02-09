@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken'); //two factor layer:pw and SECRET
 const mongoose = require('mongoose');
 
 
-let SECRET = "authentecation";
+let SECRET = 'authentecation';
 
 const Users = new mongoose.Schema({
   username: { type: String, required: true },
@@ -21,25 +21,25 @@ Users.pre('save', async function () {
   this.password = await bcrypt.hash(this.password, 5);
 
 
-})
+});
 
 
 // statics => cannot use this in this function, it belongs to everyone, used to save memory 
 Users.statics.basicAuth = function (auth) { // compare my pw with a hashed one.. if it valid => great 
-  let userToFind = { username: auth.user }
+  let userToFind = { username: auth.user };
   return this.findOne(userToFind)
     .then(person => {
-      return person.passwordComparator(auth.pass)
+      return person.passwordComparator(auth.pass);
     })
     .catch(console.error);
-}
+};
 
 Users.methods.passwordComparator = function (pass) {
   return bcrypt.compare(pass, this.password)
     .then(valid => {
-      return valid ? this : null
-    })
-}
+      return valid ? this : null;
+    });
+};
 
 
 // Users.statics.basicAuth = async function (user, pass) { /// I got confused to use eathier statcs or methods for this function
