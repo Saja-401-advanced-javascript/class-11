@@ -17,58 +17,39 @@ const Users = new mongoose.Schema({
 // mongoose.model('users', Users);
 
 Users.pre('save', async function () {
+  console.log('4444444', this.password);
   this.password = await bcrypt.hash(this.password, 5);
-  // console.log('4444444', this.password);
-  
-  
+
+
 })
 
-// console.log('bcrypttttt ', Users);
 
 // statics => cannot use this in this function, it belongs to everyone, used to save memory 
-Users.statics.basicAuth =  function (auth) { // compare my pw with a hashed one.. if it valid => great 
+Users.statics.basicAuth = function (auth) { // compare my pw with a hashed one.. if it valid => great 
   let userToFind = { username: auth.user }
-  console.log('***********',userToFind)
-  return  this.findOne(userToFind)
-  .then (person =>{
-    // console.log('9999999', person.password);
-    console.log('8888888888888888', person || person.passwordComparator(auth.pass))
-    return person && person.passwordComparator(auth.pass)})
-    // console.log('gggggggggggg', );
+  return this.findOne(userToFind)
+    .then(person => {
+      return person.passwordComparator(auth.pass)
+    })
+    .catch(console.error);
+}
 
-    .catch(console.error); 
-  }
-  
-  Users.methods.passwordComparator = function(pass){
-    console.log('passssss', pass);
-    console.log('ssskkkksssss', this.password);
-    
-    
-    return bcrypt.compare(pass, this.password)
+Users.methods.passwordComparator = function (pass) {
+  return bcrypt.compare(pass, this.password)
     .then(valid => {
-      
-      console.log('5555555', valid);
-     return valid ? this : null})
+      return valid ? this : null
+    })
 }
 
 
 // Users.statics.basicAuth = async function (user, pass) { /// I got confused to use eathier statcs or methods for this function
- 
-//   let valid = await bcrypt.compare(pass, this.password);
-//   console.log('jjjjjjj', valid);
-  
-//   return valid ? user : Promise.reject();
-// };
-// console.log('**************************************',Users.statics.basicAuth('saja','555') );
-
-
 Users.statics.tokenGenerator = function () {
-  console.log('sssssssssss');
-  
-  let token = jwt.sign({ id: user._id }, SECRET);
+  let token = jwt.sign({ id: this._id }, SECRET);
   return token;
 };
 // give a unique token used to authorization using 2-factors layer : username and SECRET 
+
+
 module.exports = mongoose.model('users', Users);
 
 
