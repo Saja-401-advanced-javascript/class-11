@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+    <h1> Github Log In</h1>
+    <a href=" #" id="oauth"> SIGN IN</a>
+</body>
+<script>
+
+    let baseURL = 'https://github.com/login/oauth/authorize'; //base url
+    //url => sign in github page (base url), but it is not gonna just let me sign in 
+
+
+    let options = {
+        client_id: '36f6d35de7fc8aab66a8', //query string property         
+        redirect_uri: 'http://localhost:9000/oauth', // where we go when i'm done... (redirect_uri) is a query string property
+        // I just need my username and pw to let me log in to my github
+        scope: 'read:user', // what info i'm trying to get, if there is no scope it will give every thing about github account
+        state: 'Lab-12'// whatever i want 
+    }
+
+
+
+    let queryString = Object.keys(options).map((key) => {
+        // Object.keys(options) => give me an array of keys
+        // map over this array and represent each key then retern each key first as the property of the query string =>
+        //  ex => client_Id = cee9496028e131a6781e&& redirect_uri&......  and the join make the array as a string
+
+        return `${key}=` + encodeURIComponent(options[key]); //building query
+    })
+        .join('&'); // array of keys
+
+    // encodeURIComponent => escape weired charecters
+    // console.log('long form qs:', queryString);
+
+    let wholURL = `${baseURL}?${queryString}`;
+    console.log('5555555', wholURL);
+
+    // url => base one 
+
+    console.log('lllllllllll', wholURL); // have decoded and encoded parts
+
+    let finalLink = document.getElementById('oauth');
+    finalLink.setAttribute('href', wholURL);
+</script>
+
+</html>
