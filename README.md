@@ -1,19 +1,19 @@
-# LAB - Class xx
+# LAB - Class 12
 
-## Project Name
+## OAuth
 
-### Author: Student/Group Name
+### Author: Saja Swalgah
 
 ### Links and Resources
 
-- [submission PR](https://github.com/Saja-401-advanced-javascript/class-11/pull/3)
+- [submission PR](https://github.com/Saja-401-advanced-javascript/class-11/pull/4)
 
 
 ### Setup
 
 #### `.env` requirements (where applicable)
 
-i.e.
+
 
 - `PORT` - 9000
 - `MONGODB_URI` - mongodb://localhost:27017/LAB11
@@ -21,14 +21,11 @@ i.e.
 #### How to initialize/run your application (where applicable)
 
 -`npm start` || `nodemon`
-- echo '{"username":"","password":""}' | http post :9000/signup
-- http post :9000/signin -a username:password
+- localhost/9000
 
-#### Tests
 
-- How do you run tests?  npm run test || nodemon
 
 
 #### UML
 
-![](img/class-11.jpeg)
+![](img/class 12.jpeg)
