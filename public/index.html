@@ -8,24 +8,32 @@
     <a href="#" id="oauth"> Log IN</a>
 </body>
 <script>
-    let URL = 'https://github.com/login/oauth/authorize';
-//url => sign in github page (base url)
+    let URL = 'https://github.com/login/oauth/authorize'; //base url
+//url => sign in github page (base url), but it is not gonna just let me sign in 
     let options = {
-      client_id: '',      
-      redirect_uri: 'http://localhost:3000/oauth', // where we go when i'm done... (redirect_uri) is a query string property
+      client_id: '36f6d35de7fc8aab66a8', //query string property         
+      redirect_uri: 'http://localhost:9000/oauth', // where we go when i'm done... (redirect_uri) is a query string property
+      // I just need my username and pw to let me log in to my github
       scope: 'read:user', // what info i'm trying to get, if there is no scope it will give every thing about github account
-      state: 'myfirstapp'// whatever i want 
+      state: 'myfirstaouthapp'// whatever i want 
     }
+// console.log('options', options);
 
     let QueryString = Object.keys(options).map((key) => {
-      return `${key}=` + encodeURIComponent(options[key]); //building query
+   // Object.keys(options) => give me an array of keys
+   // map over this array and represent each key then retern each key first as the property of the query string =>
+   //  ex => client_Id = cee9496028e131a6781e&& redirect_uri&......  and the join make the array as a string    
+   return `${key}=` + encodeURIComponent(options[key]); //building query
     }).join('&'); // array of keys
     // encodeURIComponent => escape weired charecters
     // console.log('long form qs:', QueryString);
 
     let authURL = `${URL}?${QueryString}`;
+    console.log('555', authURL);
+    
+    // url => base one 
 
-    console.log('the whole url:', authURL);
+    console.log('the whole url:', authURL); // have decoded and encoded parts
     
     let link = document.getElementById('oauth');
     link.setAttribute('href', authURL);

@@ -4,14 +4,20 @@
 const express = require('express');
 const basicAuth = require('./basic-mid-auth');
 const users = require('./users.js');
+const oauth = require('./oath-middleware')
 const logger = require('../middleware/logger.js');
 const notFoundHandler = require('../middleware/404.js');
 const errorHandler = require('../middleware/500.js');
 
+const app = express(); // if we make a post request we have to use express JSON so it will parse the request body 
 
-const app = express();
 
 app.use(express.json());
+
+
+
+
+// index.html => we need to be able to publicaly serve info from that 
 app.use(express.static('/public'));
 
 
@@ -40,9 +46,9 @@ app.get('/users', basicAuth, (req, res) => { // get request
 });
 
 
-// app.get('/oath', oath, (res, req) => {
-//   res.status(200).send(res.token);
-// })
+app.get('/oauth', oauth, (res, req) => {
+  res.status(200).send(res.token);
+})
 
 app.use(logger);
 app.use(errorHandler);
