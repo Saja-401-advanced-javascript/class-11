@@ -5,7 +5,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const basicAuth = require('./basic-mid-auth');
-const oauth = require('./mid-oauth.js')
+const oauth = require('./mid-oauth.js');
 const Users = require('./users.js');
 const logger = require('../middleware/logger.js');
 const notFoundHandler = require('../middleware/404.js');
@@ -38,8 +38,9 @@ app.post('/signin', basicAuth, (req, res) => {
 });
 
 app.get('/oauth', oauth, (req,res) => {
-  res.status(200).send(res.token);
-})
+  
+  res.status(200).send(req.token);
+});
 
 app.use(logger);
 app.use(errorHandler);
