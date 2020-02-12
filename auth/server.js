@@ -4,6 +4,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const bearerAuth = require('./midbearer.js')
 const basicAuth = require('./basic-mid-auth');
 const oauth = require('./mid-oauth.js');
 const Users = require('./users.js');
@@ -40,6 +41,10 @@ app.post('/signin', basicAuth, (req, res) => {
 app.get('/oauth', oauth, (req,res) => {
   
   res.status(200).send(req.token);
+});
+
+app.get('/user', bearerAuth, (req, res) => {
+  res.status(200).json(req.user);
 });
 
 app.use(logger);

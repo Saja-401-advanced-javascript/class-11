@@ -1,6 +1,6 @@
-# LAB - Class 12
+# LAB - Class 13
 
-## OAuth
+## Bearer Authorization
 
 ### Author: Saja Swalgah
 
