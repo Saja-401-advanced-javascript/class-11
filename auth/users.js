@@ -50,12 +50,12 @@ Users.statics.tokenGenerator = function () {
 // give a unique token used to authorization using 2-factors layer : username and SECRET 
 
 
-users.statics.authenticateToken = async function(token){
+Users.statics.authenticateToken = async function(token){
   try {
     let tokenObj = jwt.verify(token, process.env.SECRET);
 
     if (tokenObj.username) {
-      return Promise.resolve(tokenObject);
+      return Promise.resolve(tokenObj);
     } else {
       return Promise.reject();
     }
