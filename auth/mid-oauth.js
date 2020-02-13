@@ -43,7 +43,7 @@ async function getUser(user) {
   };
 
   let user2 = record.username;  
-  let token = jwt.sign({ password: user2.password }, SECRET);
+  let token = jwt.sign({ password: user2.password, id: user2._id, username: user2.username }, SECRET);
   new Users(record).save;
   return [user2, token];
 

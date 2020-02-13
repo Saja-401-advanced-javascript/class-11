@@ -18,7 +18,6 @@ const Users = new mongoose.Schema({
 
 Users.pre('save', async function () {
   this.password = await bcrypt.hash(this.password, 5);
-  console.log('4444444', this.password);
 
 
 });
@@ -43,18 +42,24 @@ Users.methods.passwordComparator = function (pass) {
 
 
 // Users.statics.basicAuth = async function (user, pass) { /// I got confused to use eathier statcs or methods for this function
-Users.statics.tokenGenerator = function () {
-  let token = jwt.sign({ id: this._id }, SECRET);
-  return token;
+Users.statics.tokenGenerator = function (user) {
+  let token = {
+    id: user._id,
+    username: user.username,
+    password: user.password,
+  };
+  return jwt.sign(token, SECRET);
 };
 // give a unique token used to authorization using 2-factors layer : username and SECRET 
 
 
-Users.statics.authenticateToken = async function(token){
+Users.statics.tokenAuthenticater = async function(token){  
+  
   try {
-    let tokenObj = jwt.verify(token, process.env.SECRET);
-
-    if (tokenObj.username) {
+    
+    let tokenObj = jwt.verify(token, SECRET);
+    
+    if (tokenObj) {
       return Promise.resolve(tokenObj);
     } else {
       return Promise.reject();

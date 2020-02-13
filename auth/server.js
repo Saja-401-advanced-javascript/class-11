@@ -44,6 +44,8 @@ app.get('/oauth', oauth, (req,res) => {
 });
 
 app.get('/user', bearerAuth, (req, res) => {
+  console.log('eeeeeeeee', req.user);
+  
   res.status(200).json(req.user);
 });
 
