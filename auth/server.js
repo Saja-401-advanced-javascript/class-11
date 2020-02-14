@@ -4,6 +4,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const acl = require('./acl.js');
 const bearerAuth = require('./midbearer.js');
 const basicAuth = require('./basic-mid-auth');
 const oauth = require('./mid-oauth.js');
@@ -44,10 +45,24 @@ app.get('/oauth', oauth, (req,res) => {
 });
 
 app.get('/user', bearerAuth, (req, res) => {
-  console.log('eeeeeeeee', req.user);
+  // console.log('eeeeeeeee', req.user);
   
   res.status(200).json(req.user);
 });
+
+app.get('/create', bearerAuth, acl('create'), (req, res) => {
+  res.status(200).send('authorized')
+})
+
+app.get('/update', bearerAuth, acl('update'), (req, res) => {
+  res.status(200).send('authorized')
+})
+
+
+app.get('/delete', bearerAuth, acl('delete'), (req, res) => {
+  res.status(200).send('authorized')
+})
+
 
 app.use(logger);
 app.use(errorHandler);
