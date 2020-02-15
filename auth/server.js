@@ -45,23 +45,30 @@ app.get('/oauth', oauth, (req,res) => {
 });
 
 app.get('/user', bearerAuth, (req, res) => {
-  // console.log('eeeeeeeee', req.user);
-  
   res.status(200).json(req.user);
 });
 
+app.get('/read', bearerAuth,(acl('read'), (req, res) => {
+  res.status(200).send('done');
+}));
+
 app.get('/create', bearerAuth, acl('create'), (req, res) => {
-  res.status(200).send('authorized')
-})
+  res.status(200).send('done');
+});
 
 app.get('/update', bearerAuth, acl('update'), (req, res) => {
-  res.status(200).send('authorized')
-})
+  res.status(200).send('done');
+});
 
 
 app.get('/delete', bearerAuth, acl('delete'), (req, res) => {
-  res.status(200).send('authorized')
-})
+  res.status(200).send('done');
+});
+
+app.get('/whatever', bearerAuth, acl('read, create, update, delete'),(req, res) => {
+  res.status(200).send('done');
+
+});
 
 
 app.use(logger);

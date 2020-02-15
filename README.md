@@ -1,6 +1,6 @@
-# LAB - Class 13
+# LAB - Class 14
 
-## Bearer Authorization
+## Access Control
 
 ### Author: Saja Swalgah
 
