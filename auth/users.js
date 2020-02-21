@@ -76,21 +76,21 @@ Users.statics.capabilitiesChecker = (ability, role) => {
   let guest = ['read'];
   if (role === 'admin') {
     for (let i = 0; i < admin.length; i++) {
-      if (admin[i]) {
+      if (admin[i] === ability) {
         return true;
       }
     }
   }
   if (role === 'user') {
     for (let i = 0; i < user.length; i++) {
-      if (user[i]) {
+      if (user[i] === ability) {
         return true;
       }
     }
   }
   if (role === 'guest') {
     for (let i = 0; i < guest.length; i++) {
-      if (guest[i]) {
+      if (guest[i] === ability) {
         return true;
       }
     }
